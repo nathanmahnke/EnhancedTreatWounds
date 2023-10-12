@@ -1,0 +1,28 @@
+{
+    "id": "cinematicCamera",
+    "title": "Cinematic Camera",
+    "description": "Adds functionality for a \"TV\" player to follow player's movement and adds a hotkey to recenter the \"TV\" player to insure all players are in frame",
+    "version": "0.1",
+    "authors": [
+      {
+        "name": "Nathan Mahnke",
+        "discord": "nvmthedm",
+        "flags": {
+          "github": "nathanmahnke",
+          "ko-fi": "nvmthedm"
+        }
+      }
+    ],
+    "scripts": [
+      "scripts/cinematicCamera.js"
+    ],
+    "compatibility": {
+      "minimum": "10",
+      "verified": "10"
+    },
+  "url": "#{URL}#",
+  "manifest": "#{MANIFEST}#",
+  "download": "#{DOWNLOAD}#",
+  "license": "LICENSE",
+  "readme": "README.md"
+}
