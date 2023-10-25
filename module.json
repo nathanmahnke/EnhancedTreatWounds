@@ -1,7 +1,7 @@
 {
-    "id": "cinematicCamera",
-    "title": "Cinematic Camera",
-    "description": "Adds functionality for a \"TV\" player to follow player's movement and adds a hotkey to recenter the \"TV\" player to insure all players are in frame",
+    "id": "enhancedTreatWounds",
+    "title": "Enhanced Treat Wounds",
+    "description": "Adds enhanced functionality for the Treat Wounds pf2e Macro",
     "version": "0.1",
     "authors": [
       {
@@ -14,7 +14,7 @@
       }
     ],
     "scripts": [
-      "scripts/cinematicCamera.js"
+      "scripts/enhancedTreatWounds.js"
     ],
     "compatibility": {
       "minimum": "10",
