@@ -1,78 +1,51 @@
-Hooks.on('init', () => {
-  console.log("Hello");
-  game.keybindings.register("cinematicCamera", "Test", {
-    name: "Center TV view on players",
-    hint: "Resizes the view of the player \"TV\" to insure all players are on screen",
-    editable: [
-      {
-        key: "KeyZ"
-      }
-    ],
-    onDown: () => {
-      zoomToFitAllVisiblePlayers();
-      console.log("Z has been pressed");
-      return true;
-    },
-  });
-
-  // Register the combat turn event
-  Hooks.on('preUpdateCombat', (combat, updateData) => {
-    if (combat && combat.turns && combat.turns.length > 0) {
-      const currentTurn = combat.turns[updateData.turn];
-      const activeCreature = currentTurn.actor; // Assuming you're using the default combat system
-
-      const tvPlayer = game.users.find((u) => u.name === 'TV');
-      if (tvPlayer && (activeCreature.hasPlayerOwner(tvPlayer) || activeCreature.hasPerm('OBSERVER'))) {
-        followActiveCreatureWithCamera(activeCreature);
-      }
-    }
-  });
-
-  // Call zoomToFitAllVisiblePlayers() when a player's turn ends in combat
-  Hooks.on('updateCombat', (combat, changed) => {
-    if (combat && changed && 'turn' in changed) {
-      const turnData = combat.turns[changed.turn];
-      const actorId = turnData?.actor?._id;
-      const tvPlayer = game.users.find((u) => u.name === 'TV');
-
-      if (tvPlayer && actorId && game.actors && game.actors.get(actorId)?.hasPlayerOwner(tvPlayer)) {
-        zoomToFitAllVisiblePlayers();
-      }
-    }
-  });
+Hooks.on('ready', () => {
+    game.macros.getName('Enhanced Treat Wounds').execute = enhancedTreatWounds;
 });
 
-// Encapsulated method to zoom in/out to fit all visible player-owned creatures in the scene
-function zoomToFitAllVisiblePlayers() {
-  const visibleTokens = canvas.tokens.placeables.filter((token) => token.visible && (token.actor.isOwner || token.actor.hasPerm('OBSERVER')));
+function enhancedTreatWounds() {
+    // Check if a token is selected
+    if (game.user.targets.size === 0) {
+        ui.notifications.warn("No token selected!");
+        return;
+    }
 
-  if (visibleTokens.length > 0) {
-    const xCoords = visibleTokens.map((token) => token.x);
-    const yCoords = visibleTokens.map((token) => token.y);
+    // Get the selected token
+    const selectedToken = Array.from(game.user.targets)[0];
 
-    const minX = Math.min(...xCoords);
-    const maxX = Math.max(...xCoords);
-    const minY = Math.min(...yCoords);
-    const maxY = Math.max(...yCoords);
+    // Get player-owned tokens
+    const playerOwnedTokens = game.actors.filter(actor => actor.hasPlayerOwner);
 
-    const width = maxX - minX;
-    const height = maxY - minY;
+    // Display UI element with player-owned tokens and "other" option
+    // This is a placeholder, you'll need to implement this UI
+    displayTokenSelectionUI(playerOwnedTokens);
 
-    const sceneWidth = canvas.scene.data.width;
-    const sceneHeight = canvas.scene.data.height;
+    // Wait for user to select another player or type a name
+    // This is a placeholder, you'll need to implement this functionality
+    const selectedOtherToken = await waitForTokenSelection();
 
-    const scaleFactor = Math.min(sceneWidth / width, sceneHeight / height);
-    const targetScale = Math.min(scaleFactor, 1.0); // Set an upper limit to avoid zooming too close
+    // Call the "Treat Wounds" macro
+    const treatWoundsMacro = game.macros.getName("Treat Wounds");
+    treatWoundsMacro.execute();
 
-    canvas.animatePan({ x: (minX + maxX) / 2, y: (minY + maxY) / 2, scale: targetScale });
-  }
+    // Wait for user to click the "treat wounds" button
+    // This is a placeholder, you'll need to implement this functionality
+    await waitForTreatWounds();
+
+    // Post a message to the chat
+    ChatMessage.create({
+        user: game.user._id,
+        content: `${game.user.name} attempts to heal ${selectedOtherToken.name}`
+    });
 }
 
-// Encapsulated method to follow the active creature with the camera
-function followActiveCreatureWithCamera(activeCreature) {
-  canvas.tokens.placeables.forEach((token) => {
-    if (token.actor === activeCreature) {
-      canvas.animatePan({ x: token.x, y: token.y, scale: 1.0 });
-    }
-  });
+function displayTokenSelectionUI(playerOwnedTokens) {
+    // Implement this function to display a UI element with the player-owned tokens and an "other" option
+}
+
+function waitForTokenSelection() {
+    // Implement this function to wait for the user to select another player or type a name
+}
+
+function waitForTreatWounds() {
+    // Implement this function to wait for the user to click the "treat wounds" button
 }
