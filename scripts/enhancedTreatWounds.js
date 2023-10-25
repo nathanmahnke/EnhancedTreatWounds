@@ -58,3 +58,7 @@ function waitForTokenSelection() {
 function waitForTreatWounds() {
     // Implement this function to wait for the user to click the "treat wounds" button
 }
+
+module.exports = {
+  enhancedTreatWounds
+};

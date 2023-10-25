@@ -1,28 +1,36 @@
 {
-    "id": "enhancedTreatWounds",
-    "title": "Enhanced Treat Wounds",
-    "description": "Adds enhanced functionality for the Treat Wounds pf2e Macro",
-    "version": "0.1",
-    "authors": [
-      {
-        "name": "Nathan Mahnke",
-        "discord": "nvmthedm",
-        "flags": {
-          "github": "nathanmahnke",
-          "ko-fi": "nvmthedm"
-        }
+  "id": "enhancedTreatWounds",
+  "title": "Enhanced Treat Wounds",
+  "description": "Adds enhanced functionality for the Treat Wounds pf2e Macro",
+  "version": "0.1",
+  "authors": [
+    {
+      "name": "Nathan Mahnke",
+      "discord": "nvmthedm",
+      "flags": {
+        "github": "nathanmahnke",
+        "ko-fi": "nvmthedm"
       }
-    ],
-    "scripts": [
-      "scripts/enhancedTreatWounds.js"
-    ],
-    "compatibility": {
-      "minimum": "10",
-      "verified": "10"
-    },
+    }
+  ],
+  "scripts": [
+    "scripts/enhancedTreatWounds.js"
+  ],
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11"
+  },
   "url": "#{URL}#",
   "manifest": "#{MANIFEST}#",
   "download": "#{DOWNLOAD}#",
   "license": "LICENSE",
-  "readme": "README.md"
+  "readme": "README.md",
+  "packs": [
+    {
+      "name": "ETWMacro",
+      "label": "ETW Macro",
+      "path": "packs/ETWMacro.db",
+      "entity": "Macro"
+    }
+  ]
 }
