@@ -9,8 +9,17 @@ function enhancedTreatWounds() {
         return;
     }
 
+    // Check if more than one token is selected
+    if (game.user.targets.size > 1) {
+        ui.notifications.warn("More than one token selected!");
+        return;
+    }
+
     // Get the selected token
-    const selectedToken = Array.from(game.user.targets)[0];
+    const selectedToken = game.user.targets.values().next().value;
+
+    // Log the name of the selected token
+    console.log(`Selected token: ${selectedToken.name}`);
 
     // Get player-owned tokens
     const playerOwnedTokens = game.actors.filter(actor => actor.hasPlayerOwner);
